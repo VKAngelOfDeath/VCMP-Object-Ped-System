@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ASCII"?>
+<objectlist>
+<object id="0">
+	<flags value="0" />
+	<texture path="NPC1.txd" />
+	<collision path="NPC1.col" />
+	<model path="NPC1.dff" distance="300" />
+ </object>
+ <object id="1">
+   <flags value="0" />
+   <texture path="NPC2.txd" />
+   <collision path="NPC2.col" />
+   <model path="NPC2.dff" distance="300" />
+ </object>
+
+ <object id="2">
+<flags value="0" />
+<texture path="NPC4.txd" />
+<collision path="NPC4.col" />
+<model path="NPC4.dff" distance="300" />
+</object>
+
+<object id="3">
+<flags value="0" />
+<texture path="NPC6.txd" />
+<collision path="NPC6.col" />
+<model path="NPC6.dff" distance="300" />
+</object>
+
+<object id="4">
+<flags value="0" />
+<texture path="proman.txd" />
+<collision path="proman.col" />
+<model path="proman.dff" distance="300" />
+</object>
+
+ <object id="5">
+   <flags value="0" />
+   <texture path="NPC9.txd" />
+   <collision path="NPC9.col" />
+   <model path="NPC9.dff" distance="300" />
+ </object>
+ <object id="6">
+   <flags value="0" />
+   <texture path="NPC10.txd" />
+   <collision path="NPC10.col" />
+   <model path="NPC10.dff" distance="300" />
+ </object>
+
+ <object id="7">
+   <flags value="0" />
+   <texture path="NPC12.txd" />
+   <collision path="NPC12.col" />
+   <model path="NPC12.dff" distance="300" />
+ </object>
+ <object id="8">
+   <flags value="0" />
+   <texture path="NPC13.txd" />
+   <collision path="NPC13.col" />
+   <model path="NPC13.dff" distance="300" />
+ </object>
+ <object id="9">
+   <flags value="0" />
+   <texture path="NPC14.txd" />
+   <collision path="NPC14.col" />
+   <model path="NPC14.dff" distance="300" />
+ </object>
+ 
+ <object id="10">
+   <flags value="0" />
+   <texture path="NPC18.txd" />
+   <collision path="NPC18.col" />
+   <model path="NPC18.dff" distance="300" />
+ </object>
+
+ <object id="11">
+   <flags value="0" />
+   <texture path="coolguy.txd" />
+   <collision path="coolguy.col" />
+   <model path="coolguy.dff" distance="300" />
+ </object>
+ <object id="12">
+   <flags value="0" />
+   <texture path="coolguy2.txd" />
+   <collision path="coolguy2.col" />
+   <model path="coolguy2.dff" distance="300" />
+ </object>
+ <object id="13">
+   <flags value="0" />
+   <texture path="drugdealer.txd" />
+   <collision path="drugdealer.col" />
+   <model path="drugdealer.dff" distance="300" />
+ </object>
+ <object id="14">
+   <flags value="0" />
+   <texture path="drugdealer2.txd" />
+   <collision path="drugdealer2.col" />
+   <model path="drugdealer2.dff" distance="300" />
+ </object>
+
+ <object id="15">
+   <flags value="0" />
+   <texture path="lady1.txd" />
+   <collision path="lady1.col" />
+   <model path="lady1.dff" distance="300" />
+ </object>
+ <object id="16">
+   <flags value="0" />
+   <texture path="oldlady.txd" />
+   <collision path="oldlady.col" />
+   <model path="oldlady.dff" distance="300" />
+ </object>
+</objectlist>

@@ -1,7 +1,7 @@
 
 function onScriptLoadWP()
 {
-	WaypointsList <- array(5410, null); // 9514 Append takes ages. Put total amount of waypoints here
+	WaypointsList <- array(5407, null); // 9514 Append takes ages. Put total amount of waypoints here
 	Peds <- []; 
 	PlayerDebugView <- -1; // Index of the player we run debug with. For now debugging just works with one person.
 	PlayerDistrict <- array(100, null);

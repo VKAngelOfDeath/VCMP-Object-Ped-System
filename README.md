@@ -50,7 +50,7 @@ function GetRightPos(Position, Angle, Distance) // Takes in a vector of position
 
 NOTE: This is just a quick guide it's not meant for beginners. If you have any questions or if anything is unclear look into the code or feel free to ask me questions. 
 
-1. The waypoints are generated using python. The script requires a paths.ipl file that it then uses to extract 5000-6000 pedestrian waypoints. It does not extract other type of waypoints like boat waypoints or vehicle waypoints.It's recommended you use my paths.ipl file. In this file I adjusted the z position of a few waypoints that are below or above ground. I also made paths that are not part of the roads into boat waypoints (i excluded waypoints at the beach, etc). If you are using another file it's worth mentioning you gotta remove the first few lines of it that are not related to the waypoints. You can compare the first lines of my file to your own. I also recommend that you keep backups of your paths.ipl file so you don't ruin the game for yourself. 
+1. The waypoints are generated using python. The script requires a paths.ipl file that it then uses to extract 5000-6000 pedestrian waypoints. It does not extract other type of waypoints like boat waypoints or vehicle waypoints. It's recommended you use my paths.ipl file. In this file I adjusted the z position of a few waypoints that are below or above ground. I also made paths that are not part of the roads into boat waypoints (i excluded waypoints at the beach, etc). If you are using another file it's worth mentioning you gotta remove the first few lines of it that are not related to the waypoints. You can compare the first lines of my file to your own. I also recommend that you keep backups of your paths.ipl file so you don't ruin the game for yourself. 
 
 2. To run the script you need to install python 2.7.5 or any version close to it. After the script finish running you can copy the the waypoints to the Waypoints.nut file. If you want to edit the IPL file you can use a tool like KED. 
 
@@ -59,6 +59,7 @@ NOTE: This is just a quick guide it's not meant for beginners. If you have any q
 You can debug or see the waypoints in-game by putting: PlayerDebugView to 0 inside onScriptLoadWP() in the WaypointsMain.nut file. This debug method increases the performance signficantly, I used it only to test the waypoints. A server restart is recommended after using the debug mode. 
 
 
-# Possible updates that can be made
-You may edit the script and the ipl file to add other types of waypoints as well or to add the pedestrian waypoints I excluded. 
+# Possible future updates
+1. The script can be edited to include vehicle waypoints, this requires certain vehicle waypoints to be adjusted and for the squirrel class to be changed.
+2. The IPL file can edited to add back the waypoints for pedestrian I excluded. 
 

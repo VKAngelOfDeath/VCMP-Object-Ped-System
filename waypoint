@@ -1,0 +1,137 @@
+# -*- coding: cp1252 -*-
+lines = []
+
+
+
+from math import atan2;
+
+testing_vect = [];
+
+
+class waypoint_cc:
+    counter = 0;
+    def __init__(self, line, group, group_index):
+        self.index = waypoint_cc.counter; # Index which will be used by squirrel array that will store this class. Null points doesnt increase count
+        self.group = group; # the index for the group itself dependent how many groups of checkpoints vcmp created
+        self.group_index = group_index; # Index in the group 0-12
+        split_str = line.split(", ");
+        self.val_type = int(split_str[0].strip()); # 0 = null node, 1 = External node (goes to other groups), 2 = internal only goes to the group
+        self.val_next = int(split_str[1].strip()); # Next index of the group from the IPL (we will modify it)
+        self.is_crossroad = int(split_str[2].strip()); # 1 = Waypoints where peds cross the road. UNUSED
+        self.val_x = float(split_str[3])/16 # We divide it by 16 to get the actual in-game pos.
+        self.val_y = float(split_str[4])/16
+        self.val_z = float(split_str[5])/16
+        self.median = float(split_str[6])/16;
+        self.left_lane = int(split_str[7]);
+        self.right_lane = int(split_str[8]);
+        self.speed_limit = int(split_str[9]);
+        self.flags = int(split_str[10]);
+        self.spawn_rate = float(split_str[11]);
+        self.same = -1; # If any checkpoint is the same.
+        self.test_same_dist = 0; # For testing purposes.
+        self.next_nodes = []; # All the connected nodes
+        self.next_dist = []; # Dist*1000 to travel to next node
+        self.next_angle = []; # Angle to travel to next node.
+        self.amount = []; # Used for counting npcs on node.
+        if (self.val_type != 0): waypoint_cc.counter += 1; # Only non null nodes.
+        else: self.index = -1; # No null points
+        
+    def math_dist(self, x1, y1, z1, x2, y2, z2): # math.dist not working
+        return ( (x2 - x1)**2 + (y2 - y1)**2+ (z2 - z1)**2 )**0.5
+    
+    def connection(self, waypoint): # checks the connection between two checkpoints´and connects
+        if ((waypoint.val_type == 0) or (self.val_type == 0)): return; # If null node ignore
+        if ((self.val_next == waypoint.group_index)): # If both checkpoints are connected
+            self.add_connection(waypoint.index);
+            waypoint.add_connection(self.index); # Adding the squirrel index connection for both if the index doesn't already exist
+            self.add_distance(waypoint);
+            waypoint.add_distance(self);
+            self.add_angle(waypoint);
+            waypoint.add_angle(self);
+
+    def add_connection(self, index_con): # Adds the squirrel index for the connected nodes
+        if (index_con not in self.next_nodes): self.next_nodes.append(index_con);
+
+    def add_distance(self, wp):
+        dist = round(self.math_dist(self.val_x, self.val_y, self.val_z, wp.val_x, wp.val_y, wp.val_z)*1000); # Squirrel uses ms. 
+        self.next_dist.append(dist);
+
+    def add_angle(self, wp):
+        angle = round(atan2(self.val_y-wp.val_y, self.val_x - wp.val_x)-4.71, 4);
+        self.next_angle.append(angle);
+        self.amount.append(0);
+    
+
+    def same_check(self, wp): # if waypoint is at same position merge them.
+        if ((wp.val_type == 0) or (self.val_type == 0) or (self.val_type != 1) or (wp.val_type != 1)): return; # If null node ignore
+        
+        distance_e = self.math_dist(self.val_x, self.val_y, self.val_z, wp.val_x, wp.val_y, wp.val_z)
+        if (distance_e < 1.0):
+            testing_vect.append(distance_e);
+            if ((self.same != -1) or (wp.same != -1)): print("ERROR two or more same points: {}, {}, {} ({}, {})".format(self.index, wp.index, self.same, self.test_same_dist, distance_e));
+            self.test_same_dist = distance_e;
+            wp.test_same_dist = distance_e;
+            wp.same = self.index;
+            self.same = wp.index;
+
+                    
+
+
+class waypoint_group:
+    counter = 0;
+    def __init__(self, lines):
+        self.group = waypoint_group.counter; # Group index.
+        self.waypoints = [waypoint_cc(line, self.group, i) for i, line in enumerate(lines)]
+        waypoint_group.counter += 1
+    
+    def print_connections(self):
+        for i, wp in enumerate(self.waypoints): # Checkpoint number in group (Squirrel index of the waypoint). Next: where it goes. squirrel next: the squirrel indexes its connected to
+            print("group_index: " + str(wp.group_index) + "("+str(wp.index)+")" + " - val_next: " + str(wp.val_next) + ". Squirrel next: "+  str(wp.next_nodes)  +". Same : " + str(wp.same)+ "")
+            
+    def print_squirrel_code(self):
+        for i, wp in enumerate(self.waypoints): # Checkpoint number in group (Squirrel index of the waypoint). Next: where it goes. squirrel next: the squirrel indexes its connected to
+           if (wp.val_type != 0): print("CreateWaypoint({}, {}, {}, {}, {}, {}, {}, {}, {});".format(wp.index, wp.next_nodes, wp.same, wp.val_x, wp.val_y, (wp.val_z+1), wp.next_dist, wp.next_angle, wp.amount )) # dont print null nodes. +1 in Z to make it better with vks models.
+                    
+    def connect_waypoints_in_group(self):
+        for i, wp in enumerate(self.waypoints):
+            for k, wp_check in enumerate(self.waypoints):
+                wp.connection(wp_check); # checks and makes any connection there within the group.
+    
+    def connect_same_waypoint(self, wp_group):
+        for i, wp in enumerate(self.waypoints):
+            for k, wp_check in enumerate(wp_group.waypoints):
+                #print(str(wp), str(wp_check))
+                wp.same_check(wp_check)
+                
+            
+    def get_waypoint(self, index):
+        for i, wp in enumerate(self.waypoints): 
+            if (i == index): return self.waypoints[i]
+
+
+
+def main():
+     # Reading the lines
+    with open('paths.ipl') as f:
+        lines = f.readlines()
+    num_lines = len(lines);
+
+    # Storing all the lines related to peds, removing the cars one. which has 1, -1\n 
+    matrix = [waypoint_group(lines[i+1:i + 13]) for i in xrange(0, num_lines, 13) if lines[i] == "0, -1\n"]
+
+    # Connect the waypoints & connect the ones that are the same. 
+    for i, wp_group in enumerate(matrix):
+        wp_group.connect_waypoints_in_group()
+        for k, wp_group_comp in enumerate(matrix):
+            if (k <= i): continue; # So we don't compare more than what is needed
+            wp_group.connect_same_waypoint(wp_group_comp);
+    testing_vect.sort();
+    print(testing_vect);
+    for i, wp_group in enumerate(matrix):
+        wp_group.print_squirrel_code();
+
+
+if __name__ == "__main__":
+    main()
+
+

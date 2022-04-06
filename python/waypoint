@@ -39,7 +39,7 @@ class waypoint_cc:
     def math_dist(self, x1, y1, z1, x2, y2, z2): # math.dist not working
         return ( (x2 - x1)**2 + (y2 - y1)**2+ (z2 - z1)**2 )**0.5
     
-    def connection(self, waypoint): # checks the connection between two checkpoints´and connects
+    def connection(self, waypoint): # checks the connection between two checkpointsÂ´and connects
         if ((waypoint.val_type == 0) or (self.val_type == 0)): return; # If null node ignore
         if ((self.val_next == waypoint.group_index)): # If both checkpoints are connected
             self.add_connection(waypoint.index);

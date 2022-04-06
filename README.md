@@ -46,7 +46,7 @@ function GetRightPos(Position, Angle, Distance) // Takes in a vector of position
 }
 ```
 
-4. Make sure the content of the store folder is properly added to your folder. If you are using existing custom objects already be sure to edit the CivilianObjectModel
+4. Make sure the content of the store folder is properly added to your server. If you are using existing custom objects already be sure to edit the CivilianObjectModel
 function inside the WaypointFunction.nut file to the object models of your civilians. 
 
 

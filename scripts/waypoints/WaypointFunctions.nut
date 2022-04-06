@@ -63,29 +63,28 @@ function GetPedPos(Index)
 
 function CivilianObjectModel(Num)
 { 
-	
 	switch (Num)
 	{
-		case 1: return 6025; 
-		case 2: return 6026;
-		case 3: return 6028;
-		case 4: return 6030; 
-		case 5: return 6034;
-		case 6: return 6038;
-		case 7: return 6039;
-		case 8: return 6041;
-		case 9: return 6042;
-		case 10: return 6043;
-		case 11: return 6047;
-		case 12: return 6088;
-		case 13: return 6089;
-		case 14: return 6090;
-		case 15: return 6091;
-		case 16: return 6093; 
-		case 17: return 6094; 
-		default: return 6025;
+		case 1: return 6000; 
+		case 2: return 6001;
+		case 3: return 6002;
+		case 4: return 6003; 
+		case 5: return 6004;
+		case 6: return 6005;
+		case 7: return 6006;
+		case 8: return 6007;
+		case 9: return 6008;
+		case 10: return 6009;
+		case 11: return 6010;
+		case 12: return 6011;
+		case 13: return 6012;
+		case 14: return 6013;
+		case 15: return 6014;
+		case 16: return 6015; 
+		case 17: return 6016; 
+		default: return 6000;
 	}
-
+	
 }
 
 
